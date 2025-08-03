@@ -16,7 +16,7 @@ const [cookies, setCookie, removeCookie] = useCookies([]);
     const verifyUser = async () => {
       // If there's no token cookie, redirect to the login page of the 'front' app
       if (!cookies.token) {
-        window.location.href = "http://localhost:3000/login"; // Use the URL of your 'front' app
+        window.location.href = "https://d-pravah-frontend.vercel.app/login"; // Use the URL of your 'front' app
         return; // Stop execution
       }
 
@@ -24,7 +24,7 @@ const [cookies, setCookie, removeCookie] = useCookies([]);
       try {
         // IMPORTANT: Make sure this URL points to your actual verification endpoint
         const { data } = await axios.post(
-          "http://localhost:3002/verify", // Changed to a more specific endpoint
+          "https://d-pravah-backend.vercel.app/verify", // Changed to a more specific endpoint
           {},
           { withCredentials: true }
         );
@@ -37,12 +37,12 @@ const [cookies, setCookie, removeCookie] = useCookies([]);
         } else {
           // If verification fails, remove the bad cookie and redirect to login
           removeCookie("token");
-          window.location.href = "http://localhost:3000/login";
+          window.location.href = "https://d-pravah-frontend.vercel.app/login";
         }
       } catch (error) {
         console.error("Verification failed:", error);
         removeCookie("token");
-        window.location.href = "http://localhost:3000/login";
+        window.location.href = "https://d-pravah-frontend.vercel.app/login";
       }
     };
 
@@ -52,7 +52,7 @@ const [cookies, setCookie, removeCookie] = useCookies([]);
   const Logout = () => {
     removeCookie("token");
     // Redirect to the login page of the 'front' app
-    window.location.href = "http://localhost:3001/login";
+    window.location.href = "https://d-pravah-frontend.vercel.app/login";
   };
     return ( 
         <>

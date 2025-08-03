@@ -15,7 +15,7 @@ const BuyActionWindow = ({ uid }) => {
 
   const handleBuyClick = async () => {
     try {
-      await axios.post("http://localhost:3002/newOrder", {
+      await axios.post("https://d-pravah-backend.vercel.app/newOrder", {
         name: uid,
         qty: stockQuantity,
         price: stockPrice,
@@ -25,7 +25,7 @@ const BuyActionWindow = ({ uid }) => {
       // 4. Call the function you got from the context
       closeBuyWindow(); 
       await fetchHoldings(); 
-      
+
     } catch (error) {
       console.error("Failed to place order:", error);
       alert("Could not place order.");

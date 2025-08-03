@@ -23,11 +23,11 @@ const [username, setUsername] = useState('');
           setIsLoading(false);
         } else {
           // If not verified, redirect to login page
-          window.location.href = 'http://localhost:3000/login';
+          window.location.href = 'https://d-pravah-frontend.vercel.app/login';
         }
       } catch (error) {
         // If there's an error, redirect
-        window.location.href = 'http://localhost:3000/login';
+        window.location.href = 'https://d-pravah-frontend.vercel.app/login';
       } finally {
         setIsLoading(false);
       }

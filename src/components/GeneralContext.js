@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import BuyActionWindow from "./BuyActionWindow";
 
-const api = axios.create({ baseURL: 'http://localhost:3002' });
+const api = axios.create({ baseURL: 'https://d-pravah-backend.vercel.app' });
 
 const GeneralContext = React.createContext({
   openBuyWindow: (uid) => {},
