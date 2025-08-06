@@ -45,50 +45,108 @@ const ProtectedRoute = ({ children }) => {
 
 
   // We only need one state to track if we are done loading.
+  // const [isLoading, setIsLoading] = useState(true);
+
+  // useEffect(() => {
+  //   const verifyUser = async () => {
+  //     try {
+  //       // Get the token from localStorage. If it's not there, redirect immediately.
+  //       const token = localStorage.getItem('authToken');
+  //       if (!token) {
+  //         window.location.href = 'http://d-pravah-frontend.vercel.app/login';
+  //         return; // Stop execution
+  //       }
+
+  //       // The axios interceptor automatically adds the token to the header.
+  //       const { data } = await api.post('/verify');
+
+  //       if (data.status) {
+  //         // --- SUCCESS ---
+  //         // The user is valid. We are done loading.
+  //         setIsLoading(false);
+  //       } else {
+  //         // --- FAILURE ---
+  //         // The token is invalid. Remove it and redirect.
+  //         localStorage.removeItem('authToken');
+  //         window.location.href = 'http://d-pravah-frontend.vercel.app/login';
+  //       }
+  //     } catch (error) {
+  //       // --- FAILURE ---
+  //       // An error occurred. Remove any token and redirect.
+  //       localStorage.removeItem('authToken');
+  //       window.location.href = 'http://d-pravah-frontend.vercel.app/login';
+  //     }
+  //   };
+
+  //   verifyUser();
+  // }, []); // The empty array ensures this runs only once
+
+  // // If we are still loading, show a loading message.
+  // if (isLoading) {
+  //   return <div>Loading Dashboard...</div>;
+  // }
+
+  // // If loading is finished and we haven't redirected, it means the user is
+  // // authenticated. Render the children (your Home component).
+  // return children;
+
+
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const verifyUser = async () => {
+    const authCheck = async () => {
+      // First, check if a token was passed in the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const tokenFromUrl = urlParams.get('token');
+
+      let tokenToVerify = null;
+
+      if (tokenFromUrl) {
+        // If we found a token in the URL, save it to our localStorage
+        localStorage.setItem('authToken', tokenFromUrl);
+        tokenToVerify = tokenFromUrl;
+
+        // Clean the URL so the token isn't visible to the user
+        window.history.replaceState({}, document.title, window.location.pathname);
+      } else {
+        // If no token in URL, check localStorage (for subsequent page loads)
+        tokenToVerify = localStorage.getItem('authToken');
+      }
+
+      // If we still don't have a token, the user is not authenticated
+      if (!tokenToVerify) {
+        window.location.href = 'https://d-pravah-frontend.vercel.app/login';
+        return;
+      }
+
+      // Now, verify the token we found
       try {
-        // Get the token from localStorage. If it's not there, redirect immediately.
-        const token = localStorage.getItem('authToken');
-        if (!token) {
-          window.location.href = 'http://d-pravah-frontend.vercel.app/login';
-          return; // Stop execution
-        }
-
-        // The axios interceptor automatically adds the token to the header.
-        const { data } = await api.post('/verify');
-
+        const { data } = await api.post('/verify'); // Interceptor adds the token
         if (data.status) {
-          // --- SUCCESS ---
-          // The user is valid. We are done loading.
+          // Success! Stop loading and show the dashboard.
           setIsLoading(false);
         } else {
-          // --- FAILURE ---
-          // The token is invalid. Remove it and redirect.
+          // Token is invalid, clear storage and redirect
           localStorage.removeItem('authToken');
-          window.location.href = 'http://d-pravah-frontend.vercel.app/login';
+          window.location.href = 'https://d-pravah-frontend.vercel.app/login';
         }
       } catch (error) {
-        // --- FAILURE ---
-        // An error occurred. Remove any token and redirect.
+        // Verification request failed, clear storage and redirect
         localStorage.removeItem('authToken');
-        window.location.href = 'http://d-pravah-frontend.vercel.app/login';
+        window.location.href = 'https://d-pravah-frontend.vercel.app/login';
       }
     };
 
-    verifyUser();
-  }, []); // The empty array ensures this runs only once
+    authCheck();
+  }, []);
 
-  // If we are still loading, show a loading message.
   if (isLoading) {
-    return <div>Loading Dashboard...</div>;
+    return <div>Loading...</div>;
   }
 
-  // If loading is finished and we haven't redirected, it means the user is
-  // authenticated. Render the children (your Home component).
   return children;
+
 };
 
 export default ProtectedRoute;
