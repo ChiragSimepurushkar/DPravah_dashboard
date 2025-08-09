@@ -12,9 +12,13 @@ const Holdings = () => {
   const [allHoldings, setAllHoldings] = useState([]);
 
   useEffect(() => {
-    axios.get("https://d-pravah-backend.vercel.app/allHoldings").then((res) => {
+     api.get("/allHoldings").then((res) => {
       setAllHoldings(res.data);
     })
+    .catch(error => {
+      console.error("Failed to fetch holdings:", error);
+      // Handle error, maybe show a message to the user
+    });
   }, []);
 
 // const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
