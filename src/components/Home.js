@@ -62,11 +62,11 @@ const Home = () => {
   useEffect(() => {
     const verifyCookie = async () => {
       if (!cookies.token) {
-        window.location.href = "http://localhost:3000/login"; 
+        window.location.href = "https://d-pravah-frontend.vercel.app/login"; 
         return; // Stop execution after redirecting
       }
       const { data } = await axios.post(
-        "http://localhost:3002",
+        "https://d-pravah-backend.vercel.app/",
         {},
         { withCredentials: true }
       );
@@ -76,13 +76,13 @@ const Home = () => {
         ? toast(`Hello ${user}`, {
             position: "top-right",
           })
-        : (removeCookie("token"), window.location.href = "http://localhost:3000/login");
+        : (removeCookie("token"), window.location.href = "https://d-pravah-frontend.vercel.app/login");
     };
     verifyCookie();
   }, [cookies, removeCookie]);
   const Logout = () => {
     removeCookie("token");
-    window.location.href = "http://localhost:3000/login";
+    window.location.href = "https://d-pravah-frontend.vercel.app/login";
   };
 
     return ( 
