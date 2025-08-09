@@ -117,6 +117,7 @@ const ProtectedRoute = ({ children }) => {
       // If we still don't have a token, the user is not authenticated
       if (!tokenToVerify) {
         window.location.href = 'https://d-pravah-frontend.vercel.app/login';
+        window.location.href = 'https://d-pravah-frontend.vercel.app/login';
         return;
       }
 
