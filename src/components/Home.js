@@ -57,38 +57,38 @@ import { ToastContainer, toast } from "react-toastify";
 
 const Home = () => {
   // const navigate = useNavigate();
-  const [cookies, removeCookie] = useCookies([]);
-  const [username, setUsername] = useState("");
-  useEffect(() => {
-    const verifyCookie = async () => {
-      if (!cookies.token) {
-        window.location.href = "https://d-pravah-frontend.vercel.app/login"; 
-        return; // Stop execution after redirecting
-      }
-      const { data } = await axios.post(
-        "https://d-pravah-backend.vercel.app/",
-        {},
-        { withCredentials: true }
-      );
-      const { status, user } = data;
-      setUsername(user);
-      return status
-        ? toast(`Hello ${user}`, {
-            position: "top-right",
-          })
-        : (removeCookie("token"), window.location.href = "https://d-pravah-frontend.vercel.app/login");
-    };
-    verifyCookie();
-  }, [cookies, removeCookie]);
-  const Logout = () => {
-    removeCookie("token");
-    window.location.href = "https://d-pravah-frontend.vercel.app/login";
-  };
+  // const [cookies, removeCookie] = useCookies([]);
+  // const [username, setUsername] = useState("");
+  // useEffect(() => {
+  //   const verifyCookie = async () => {
+  //     if (!cookies.token) {
+  //       window.location.href = "https://d-pravah-frontend.vercel.app/login"; 
+  //       return; // Stop execution after redirecting
+  //     }
+  //     const { data } = await axios.post(
+  //       "https://d-pravah-backend.vercel.app/",
+  //       {},
+  //       { withCredentials: true }
+  //     );
+  //     const { status, user } = data;
+  //     setUsername(user);
+  //     return status
+  //       ? toast(`Hello ${user}`, {
+  //           position: "top-right",
+  //         })
+  //       : (removeCookie("token"), window.location.href = "https://d-pravah-frontend.vercel.app/login");
+  //   };
+  //   verifyCookie();
+  // }, [cookies, removeCookie]);
+  // const Logout = () => {
+  //   removeCookie("token");
+  //   window.location.href = "https://d-pravah-frontend.vercel.app/login";
+  // };
 
     return ( 
         <>
-        <TopBar username={username} onLogout={Logout}/>
-        {/* <TopBar/> */}
+        {/* <TopBar username={username} onLogout={Logout}/> */}
+        <TopBar/>
         <Dashboard/>
          <ToastContainer />
         </>

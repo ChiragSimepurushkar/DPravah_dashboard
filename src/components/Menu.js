@@ -58,7 +58,7 @@ const activeMenuClass = "menu selected";
               <li><Link to="/settings">Settings</Link></li>
               <hr />
               {/* 4. Attach the onLogout function to the Logout button's onClick */}
-              <li><button onClick={onLogout}>Logout</button></li>
+              {/* <li><button onClick={onLogout}>Logout</button></li> */}
             </ul>
           </div>
         )}
