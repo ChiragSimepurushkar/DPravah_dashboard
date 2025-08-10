@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useContext } from "react";
 import axios from "axios";
 import { VerticalChart } from "./VerticalChart";
-
+import api from "../api/axiosConfig"; // Adjust this path if needed
 // import { holdings } from "../data/data";
 import GeneralContext from '../components/GeneralContext'; 
 

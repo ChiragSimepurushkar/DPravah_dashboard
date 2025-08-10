@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from "react";
 import { positions } from "../data/data";
-
+import api from "../api/axiosConfig"; // Adjust this path if needed
 import axios from "axios";
 
 const Positions = () => {
